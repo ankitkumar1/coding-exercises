@@ -1,0 +1,21 @@
+stream of contentId's - string
+along with associated actions..
+2 Actions: increase popularity, decrease popularity - incr/decr by 1
+
+return most popular contentId at any point of time.. from this stream of data
+1: incr, 2 decr
+["id1", 1] ["id2", 1] ["id2", 1] ["id1", 2]
+
+Map
+"id1" -> Content obj
+
+Content{
+    String id,
+    int rating;
+}
+
+
+
+
+
+
