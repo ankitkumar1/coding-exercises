@@ -1,16 +1,14 @@
 package ankit.lld.messagequeue.components;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TopicSubscriber {
-
-    private final AtomicInteger offset;
-    private final ISubscriber subscriber;
+    private AtomicInteger offset;
+    private ISubscriber subscriber;
 
     public TopicSubscriber(ISubscriber subscriber){
-        this.offset = new AtomicInteger();
-        this.subscriber = Objects.requireNonNull(subscriber);
+        this.offset = new AtomicInteger(0);
+        this.subscriber = subscriber;
     }
 
     public AtomicInteger getOffset(){
