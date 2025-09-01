@@ -31,6 +31,8 @@ public class TradingSystem {
         System.out.println("Order 4 Status " + order4.status.name());
         safeSleep(10000);
         System.out.println("Order 4 Status " + order4.status.name());
+
+
     }
 
     private static final String SYMBOL_UBER = "UBER";

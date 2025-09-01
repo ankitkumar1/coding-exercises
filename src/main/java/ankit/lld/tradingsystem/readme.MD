@@ -52,3 +52,39 @@ Evaluation criteria:
     Abstraction
     Object-Oriented concepts.
     Language proficiency.
+============================================
+Design Patterns
+1. Command Pattern (lightweight flavor)
+    Where: Order objects themselves.
+    Why:
+        An Order encapsulates an action request (BUY 100 RELIANCE @ 2500) along with metadata (who, when).
+        The OrderBook executes those commands later when matches occur.
+        This is similar to Command Pattern: an object representing an operation with all needed data.
+2. Mediator Pattern
+    Where: OrderBook.
+    Why:
+      Acts as a mediator between different orders (buyers/sellers).
+      Instead of orders talking to each other, the OrderBook decides who gets matched, in what order, and at what price.
+      Centralizes communication logic → prevents orders from being tightly coupled.
+3. Singleton: TradingSystem object.
+4. Decorator:
+   We didn’t bake expiry inside OrderBook → instead we decorated TradingSystem with expiry scheduling.
+
+SOLID Principle
+=============================
+🔹 S — Single Responsibility Principle (SRP)
+    👉 A class should have only one reason to change.
+    Order → only represents an order’s data (not matching logic).
+    Trade → represents execution details.
+    OrderBook → only manages order queues and matching.
+    TradingSystem → orchestrates across multiple order books, ID generation, and expiry scheduling.
+    TradingEventPublisher → only handles event broadcasting.
+🔹 O — Open/Closed Principle (OCP)
+    Comparators (Strategy Pattern) for buy/sell → 
+            if exchange rules change (e.g., pro-rata matching, auction mode), 
+            we add new comparators instead of rewriting OrderBook.
+🔹 L — Liskov Substitution Principle (LSP)
+    Currently we have Order and Trade as final entities.
+    If tomorrow we introduce MarketOrder extends Order or StopLossOrder extends Order, they 
+    should still work with OrderBook because OrderBook only depends on the abstract Order properties (price, quantity, timestamp).
+
