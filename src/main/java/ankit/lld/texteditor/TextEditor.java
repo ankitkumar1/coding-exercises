@@ -7,11 +7,11 @@ public class TextEditor {
         content.append(text);
     }
 
-    public void update(int start, int end, String newText){
+    public void replace(int start, int end, String newText){
         content.replace(start, end, newText);
     }
 
-    public void delete(int start, int end){
+    public void remove(int start, int end){
         content.delete(start, end);
     }
 

@@ -1,6 +1,5 @@
 package ankit.lld.ratelimiter;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -16,7 +15,7 @@ public class InMemoryRateLimiter {
         Runnable runnable1 = () -> {
             System.out.println("User 1: "+userService.callService(100L));
         };
-        //threadPool.scheduleAtFixedRate(runnable1, 0, 2, TimeUnit.SECONDS);
+        threadPool.scheduleAtFixedRate(runnable1, 0, 2, TimeUnit.SECONDS);
 
         threadPool.scheduleAtFixedRate(() -> {
             System.out.println("User 2: "+userService.callService(200L));

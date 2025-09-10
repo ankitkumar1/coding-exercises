@@ -15,11 +15,11 @@ public class UpdateCommand implements Command{
     @Override
     public void execute() {
         this.oldText = editor.getText().substring(start, end);
-        editor.update(start, end, udpatedText);
+        editor.replace(start, end, udpatedText);
     }
 
     @Override
     public void undo() {
-        editor.update(start, start+udpatedText.length(), oldText);
+        editor.replace(start, start+udpatedText.length(), oldText);
     }
 }

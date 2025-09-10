@@ -70,6 +70,7 @@ class SplitWiseService{
         Group group = groupMap.get(groupId);
         User user = userMap.get(userId);
         group.addUsers(List.of(user));
+        this.balanceSheet.groupBalances.get(group).put(user, new HashMap<>());
         System.out.println("User "+user.name+" is added successfully to group "+ group.name);
     }
 
@@ -89,19 +90,21 @@ class SplitWiseService{
             Map<User, Map<User, Double>> groupBalance = balanceSheet.groupBalances.get(group);
             User payer = expense.paidBy;
 
-            // Step2: Update user balance sheet
+            // Step2: Update user balance sheet and group balance sheet
             for(Split split : expense.splits){
                 if(split.user() == payer){
                     continue;
                 }
-                balanceSheet.userBalances.get(split.user()).put(payer,
-                        balanceSheet.userBalances.get(split.user()).getOrDefault(payer, 0d) + split.amount());
-                balanceSheet.userBalances.get(payer).put(split.user(),
-                        balanceSheet.userBalances.get(payer).getOrDefault(split.user(), 0d) - split.amount());
+                User debtor = split.user();
+                Map<User, Double> debtorMap = balanceSheet.userBalances.get(debtor);
+                Map<User, Double> creditorMap = balanceSheet.userBalances.get(payer);
+
+                debtorMap.put(payer, debtorMap.getOrDefault(payer, 0d) + split.amount());
+                creditorMap.put(debtor, creditorMap.getOrDefault(debtor, 0d) - split.amount());
 
                 if(groupBalance != null){
-                    groupBalance.get(split.user()).put(payer,
-                            groupBalance.get(split.user()).getOrDefault(payer, 0d) + split.amount());
+                    Map<User, Double> groupDebtorMap = groupBalance.get(debtor);
+                    groupDebtorMap.put(payer, groupDebtorMap.getOrDefault(payer, 0d) + split.amount());
                 }
             }
         }finally {

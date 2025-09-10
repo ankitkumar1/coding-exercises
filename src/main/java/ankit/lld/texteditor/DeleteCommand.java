@@ -15,11 +15,11 @@ public class DeleteCommand implements Command{
     @Override
     public void execute() {
         deletedText = editor.getText().substring(start, end);
-        editor.delete(start, end);
+        editor.remove(start, end);
     }
 
     @Override
     public void undo() {
-        editor.update(start, start, deletedText);
+        editor.replace(start, start, deletedText);
     }
 }

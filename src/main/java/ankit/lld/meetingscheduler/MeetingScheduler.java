@@ -71,12 +71,12 @@ public class MeetingScheduler {
     public List<MeetingRoom> getAvaialbleRooms(Interval interval){
         List<MeetingRoom> rooms = new ArrayList<>();
         for(MeetingRoom room : meetingRooms){
-            TreeSet<Meeting> availability = upComingMeetings.get(room.id);
-            if(availability == null || availability.isEmpty()){
+            TreeSet<Meeting> scheduledMeetings = upComingMeetings.get(room.id);
+            if(scheduledMeetings == null || scheduledMeetings.isEmpty()){
                 rooms.add(room);
                 continue;
             }
-            boolean isOverlapping = isOverlapping(interval, availability);
+            boolean isOverlapping = isOverlapping(interval, scheduledMeetings);
             if(!isOverlapping){
                 rooms.add(room);
             }
@@ -120,8 +120,8 @@ public class MeetingScheduler {
         return !isOverlapping(interval, availability);
     }
 
-    private static boolean isOverlapping(Interval interval, TreeSet<Meeting> availability) {
-        return availability.stream().anyMatch(meeting -> {
+    private static boolean isOverlapping(Interval interval, TreeSet<Meeting> scheduledMeetings) {
+        return scheduledMeetings.stream().anyMatch(meeting -> {
             Interval meetingInterval = meeting.interval;
 
             return meetingInterval.equals(interval) || (interval.startTime().isAfter(meetingInterval.startTime()) &&

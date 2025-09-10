@@ -17,6 +17,6 @@ public class InsertCommand implements Command{
     @Override
     public void undo() {
         int start = editor.getText().length() - textToInsert.length();
-        editor.delete(start, editor.getText().length());
+        editor.remove(start, editor.getText().length());
     }
 }

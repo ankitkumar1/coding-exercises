@@ -147,6 +147,18 @@ class Order{
         this.timeStamp = Instant.now().toEpochMilli();
         this.status = OrderStatus.OPEN;
     }
+
+    public double getPrice(){
+        return this.price;
+    }
+
+    public long getTimeStamp(){
+        return this.timeStamp;
+    }
+
+    public long getId(){
+        return this.id;
+    }
 }
 
 class Trade{
@@ -180,23 +192,11 @@ class OrderBook{
 
     public OrderBook(String symbol){
         this.symbol = symbol;
-        this.buyOrders = new TreeSet<>((o1, o2) -> {
-           if(o1.price != o2.price){
-               return Double.compare(o2.price, o1.price);
-           }else if(o1.timeStamp != o2.timeStamp){
-               return Long.compare(o1.timeStamp, o2.timeStamp);
-           }
-           return Long.compare(o1.id, o2.id);
-        });
+        this.buyOrders = new TreeSet<>(Comparator.comparingDouble(Order::getPrice).reversed()
+                .thenComparing(Order::getTimeStamp).thenComparing(Order::getId));
 
-        this.sellOrders = new TreeSet<>((o1, o2) -> {
-            if(o1.price != o2.price){
-                return Double.compare(o1.price, o2.price);
-            }else if(o1.timeStamp != o2.timeStamp){
-                return Long.compare(o1.timeStamp, o2.timeStamp);
-            }
-            return Long.compare(o1.id, o2.id);
-        });
+        this.sellOrders = new TreeSet<>(Comparator.comparingDouble(Order::getPrice)
+                .thenComparing(Order::getTimeStamp).thenComparing(Order::getId));
 
         this.trades = new ArrayList<>();
     }
