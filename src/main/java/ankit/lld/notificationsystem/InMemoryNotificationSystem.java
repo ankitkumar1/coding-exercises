@@ -2,10 +2,7 @@ package ankit.lld.notificationsystem;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryNotificationSystem {
@@ -28,13 +25,13 @@ enum ChannelType{
 }
 
 class NotificationService{
-    private BlockingDeque<NotificationRequest> requests;
+    private BlockingQueue<NotificationRequest> requests;
     private Map<ChannelType, NotificationChannel> channels;
     private NotificationDispatcher dispatcher;
     private Map<Integer, NotificationStatus> statusMap;
 
     public NotificationService(){
-        this.requests = new LinkedBlockingDeque<>();
+        this.requests = new LinkedBlockingQueue<>();
         this.statusMap = new HashMap<>();
         this.channels = new HashMap<>();
         this.channels.put(ChannelType.EMAIL, new EmailNotificationChannel());
@@ -56,12 +53,12 @@ class NotificationService{
 }
 
 class NotificationDispatcher{
-    private final BlockingDeque<NotificationRequest> requests;
+    private final BlockingQueue<NotificationRequest> requests;
     private final Map<ChannelType, NotificationChannel> channels;
     private final Map<Integer, NotificationStatus> statusMap;
     private final ExecutorService executorService;
 
-    public NotificationDispatcher(BlockingDeque<NotificationRequest> requests,
+    public NotificationDispatcher(BlockingQueue<NotificationRequest> requests,
                                   Map<ChannelType, NotificationChannel> channels,
                                   Map<Integer, NotificationStatus> statusMap){
         this.requests = requests;
