@@ -10,7 +10,7 @@ public class BinPackagingResponse{
     private final String status;
     private final Map<Truck, List<Box>> placedMap;
 
-    BinPackagingResponse(Builder builder){
+    private BinPackagingResponse(Builder builder){
         this.status = builder.status;
         this.placedMap = builder.placedMap;
     }

@@ -1,4 +1,4 @@
-package ankit.dsa;
+package ankit.lld;
 
 import ankit.lld.binpackaging.BinPackaging;
 import ankit.lld.binpackaging.BinPackagingResponse;
@@ -11,7 +11,12 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * 120, 64     8,4,20,60  - can be placed on one truck
+ * 120, 64     8,4,20,60, 40  - Need 2 trucks
+ * 120, 64     8,4,20,60, 64  - Not possible
+ * it can be possible with optimized approach.
+ * */
 public class BinPackagingTest {
 
     @Test
