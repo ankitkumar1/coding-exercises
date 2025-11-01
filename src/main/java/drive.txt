@@ -1,0 +1,12 @@
+Good drive-
+ upload, download, share
+===========================
+  no limit for file size.
+
+- fileId, name, author_id,
+- Millions per minute.
+- 20K TPS
+
+100000/6
+
+20000 TPS
