@@ -41,7 +41,7 @@ public class TailWithRandomAccessFile {
             while((line = file.readLine()) != null){
                 System.out.println(line);
             }
-        }catch (IOException fne){
+        }catch (IOException e){
 
         }
     }
