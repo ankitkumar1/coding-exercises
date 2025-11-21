@@ -18,6 +18,7 @@ public class DocumentSearch {
 
     private final IndexStorage storage;
     private final SearchService searchService;
+
     public DocumentSearch(){
         storage = new DefaultStorage();
         searchService = new SearchServiceImpl(storage);
@@ -132,9 +133,9 @@ class DefaultStorage implements IndexStorage{
     @Override
     public void indexTokens(String[] tokens, int docId) {
         for(int i=0; i<tokens.length; i++){
-            indexMap
-                    .computeIfAbsent(tokens[i], k -> new HashMap<>())
-                    .computeIfAbsent(docId, k -> new ArrayList<>()).add(i);
+            indexMap.putIfAbsent(tokens[i], new HashMap<>());
+            indexMap.get(tokens[i]).putIfAbsent(docId, new ArrayList<>());
+            indexMap.get(tokens[i]).get(docId).add(i);
         }
     }
 

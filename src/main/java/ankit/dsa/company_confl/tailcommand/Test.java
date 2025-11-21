@@ -1,17 +1,20 @@
 package ankit.dsa.company_confl.tailcommand;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class Test {
     public static void main(String[] args) throws IOException {
         // Generate file at same location.
-        /*try(BufferedWriter writer = new BufferedWriter(new FileWriter("sampleinput.txt",
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("sampleinput.txt",
                 StandardCharsets.UTF_8))) {
             for(int i=1; i<=10; i++){
                 writer.write("line number - "+i);
                 writer.newLine();
             }
-        }*/
+        }
 
         /*BufferedReader reader = new BufferedReader(new FileReader("sampleinput.txt", StandardCharsets.UTF_8));
         String line = reader.readLine();

@@ -22,12 +22,12 @@ public class LRUCacheWithTtlGeneric<K, V extends Number> {
         this.linkedList = new DoublyLinkedList<>();
         this.lock = new ReentrantReadWriteLock();
 
-        ScheduledExecutorService cleaner = Executors.newSingleThreadScheduledExecutor(r -> {
-            Thread t = new Thread(r, "LRUCacheCleaner");
-            t.setDaemon(true);
-            return t;
+        ScheduledExecutorService schedulerPool = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread thread = new Thread(r, "LRUCleaner");
+            thread.setDaemon(true);
+            return thread;
         });
-        cleaner.scheduleAtFixedRate(this::evictExpired, 100, 1, TimeUnit.MINUTES);
+        schedulerPool.schedule(this::evictExpired, 10, TimeUnit.MINUTES);
     }
 
     public V get(K key){

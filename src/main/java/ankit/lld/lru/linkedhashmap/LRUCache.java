@@ -8,7 +8,7 @@ public class LRUCache {
     private LinkedHashMap<Integer, Integer> map = null;
 
     public LRUCache(int capacity){
-        map = new LinkedHashMap<Integer, Integer>(){
+        map = new LinkedHashMap<>(){
             @Override
             protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest){
                 return  size() > capacity;
